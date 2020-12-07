@@ -17,19 +17,13 @@ jobs:
         with:
           repository: 'chris2511/xca'
           ref: 'RELEASE.${{ env.XCA_VERSION }}'
-          path: 'source'
           fetch-depth: 1
 
       - name: 'Build XCA'
         run: |
           brew install pkg-config autoconf automake openssl qt libtool
-          
-          mkdir build
-          mkdir install
-          cd source
           sh bootstrap
-          cd ../build
-          ../source/configure --prefix="../install" && make install
+          sh configure --prefix=./install && make install
           
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v2
