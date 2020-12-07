@@ -24,13 +24,13 @@ jobs:
         run: |
           brew install pkg-config autoconf automake openssl qt libtool
           
-          mkdir $GITHUB_WORKSPACE/build
-          mkdir $GITHUB_WORKSPACE/install
-          cd $GITHUB_WORKSPACE/build
-          $GITHUB_WORKSPACE/source/configure --prefix="$GITHUB_WORKSPACE/install" && make install
+          mkdir build
+          mkdir install
+          cd build
+          ../source/configure --prefix="../install" && make install
           
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ install }}
-          path: ${{ install }}
+          name: install
+          path: install
