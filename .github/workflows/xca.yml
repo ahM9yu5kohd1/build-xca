@@ -23,7 +23,7 @@ jobs:
         run: |
           brew install pkg-config autoconf automake openssl qt libtool
           sh bootstrap
-          sh configure --prefix=`pwd`/dist && make -j4 install
+          sh configure --prefix=`pwd`/dist && make install
           
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v2
