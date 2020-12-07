@@ -1,0 +1,34 @@
+name: C/C++ CI
+
+env:
+  XCA_VERSION: 2.3.0
+
+on:
+  workflow_dispatch:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: 'chris2511/xca'
+          ref: 'RELEASE.${{ env.XCA_VERSION }}'
+          fetch-depth: 1
+
+      - name: 'Build XCA'
+        run: |
+          FILENAME="xca-$XCA_VERSION"
+          echo "::set-env name=FILENAME::$FILENAME"
+          brew install pkg-config autoconf automake openssl qt libtool
+          mkdir "$FILENAME"
+          ./configure --prefix="$FILENAME" && make install
+          
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.FILENAME }}
+          path: ${{ env.FILENAME }}
